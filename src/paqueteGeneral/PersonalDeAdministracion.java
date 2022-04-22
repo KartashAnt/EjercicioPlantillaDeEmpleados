@@ -21,4 +21,9 @@ public class PersonalDeAdministracion extends Empleado {
 	public double sueldoNeto() {
 		return this.sueldoBruto()*super.getNeto();
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "Personal de Administraci\u00F3n";
+	}
 }

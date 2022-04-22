@@ -22,4 +22,9 @@ public class MozoDeAlmacen extends Empleado {
 	public double sueldoNeto() {
 		return this.sueldoBruto()*super.getNeto();
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "Mozo de Almacen";
+	}
 }

@@ -25,6 +25,11 @@ public class Directivo extends Empleado {
 		return this.sueldoBruto()*super.getNeto()+200.0*((this.consejo) ? 1:0);
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString() + "Directivo" + (consejo ? ", Miembro de Consejo":"");
+	}
+	
 	public boolean isConsejo() {
 		return consejo;
 	}

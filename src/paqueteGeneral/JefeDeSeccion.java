@@ -25,4 +25,18 @@ public class JefeDeSeccion extends Empleado {
 	public double sueldoNeto() {
 		return this.sueldoBruto()*super.getNeto();
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "Jefe de sección de la " + this.cat + " categor\u00EDa";
+	}
+
+	public int getCat() {
+		return cat;
+	}
+
+	public void setCat(int cat) {
+		this.cat = cat;
+	}
+	
 }

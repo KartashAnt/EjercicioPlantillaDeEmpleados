@@ -19,6 +19,7 @@ public abstract class Empleado implements Cobros{
 		this.sueldoBase = sueldoBase;
 		this.neto=neto;
 		this.aumento = aumento;
+		contarAnyos();
 	}
 
 	public abstract double sueldoBruto();
@@ -31,6 +32,11 @@ public abstract class Empleado implements Cobros{
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return this.nombre + " " + this.apellidos + " " + this.dni + " lleva " +this.antiguedad + "dias en la empresa en el puesto de ";
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
