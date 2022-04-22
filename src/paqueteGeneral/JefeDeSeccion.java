@@ -4,7 +4,7 @@ package paqueteGeneral;
 public class JefeDeSeccion extends Empleado {
 	private int cat;
 
-	public JefeDeSeccion(String nombre, String apellidos, String dni, int antiguedad, double aumento, int cat) {
+	public JefeDeSeccion(String nombre, String apellidos, String dni, int antiguedad, int cat) {
 		super(nombre, apellidos, dni, antiguedad , 1750, 0.83, 0.7);
 		this.cat = cat;
 	}
