@@ -1,9 +1,9 @@
 package paqueteGeneral;
 
-public class MozoDeAlmacen extends Empleado {
-
-	public MozoDeAlmacen(String nombre, String apellidos, String dni, int antiguedad) {
-		super(nombre, apellidos, dni, antiguedad, 1545.5, 0.85, 0.05);
+public class PersonalDeAdministracion extends Empleado {
+	
+	public PersonalDeAdministracion(String nombre, String apellidos, String dni, int antiguedad) {
+		super(nombre, apellidos, dni, antiguedad, 1635, 0.84, 0.06);
 	}
 
 	@Override
@@ -17,7 +17,6 @@ public class MozoDeAlmacen extends Empleado {
 		double max = super.getSueldoBase() * 12;
 		return Math.round(Math.min(indeminisación, max) * 100.0) / 100.0;
 	}
-
 	@Override
 	public double sueldoNeto() {
 		return this.sueldoBruto()*super.getNeto();
