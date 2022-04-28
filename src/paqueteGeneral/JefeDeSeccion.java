@@ -23,7 +23,7 @@ public class JefeDeSeccion extends Empleado {
 
 	@Override
 	public double sueldoNeto() {
-		return this.sueldoBruto()*super.getNeto();
+		return Math.round(this.sueldoBruto()*super.getNeto()*100.0)/100.0;
 	}
 	
 	@Override

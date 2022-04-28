@@ -7,37 +7,32 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class Principal {
-	static ArrayList<Empleado> empleados=new ArrayList<>();
-	static Scanner sc=new Scanner(System.in);
-	
+	static ArrayList<Empleado> empleados = new ArrayList<>();
+	static Scanner sc = new Scanner(System.in);
+
 	public static void main(String[] args) {
 		inicializar();
 		menuPrincipal();
 		System.out.println("Programa ha sido acabado con exito");
 	}
-	
+
 	public static void inicializar() {
 		empleados.add(new MozoDeAlmacen("Ramon", "Joven Letov", "35775553C", 30));
 		empleados.add(new JefeDePlanta("Pepe", "Cerdo Malvado", "05535530G", 20, 2));
 		empleados.add(new Directivo("John", "Apellido", "65003200B", 0, true));
 		empleados.add(new MozoDeAlmacen("Ivan", "Iban", "20202086E", 10));
 	}
-	
+
 	public static void menuPrincipal() {
 		int entrada;
-		boolean ejecutar=true;
-		while(ejecutar) {
+		boolean ejecutar = true;
+		while (ejecutar) {
 			System.out.println("MENU PRINCIPAL");
-			System.out.println(	"1.- Introducir trabajador\n" +
-								"2.- Eliminar trabajador\n" +
-								"3.- Listado trabajadores\n" +
-								"4.- Listado trabajadores por puesto\n" +
-								"5.- Avance temporal\n" +
-								"6.- Mostrar matriz días trabajados\n" +
-								"7.- Acabar programa\n"
-					);
+			System.out.println("1.- Introducir trabajador\n" + "2.- Eliminar trabajador\n"
+					+ "3.- Listado trabajadores\n" + "4.- Listado trabajadores por puesto\n" + "5.- Avance temporal\n"
+					+ "6.- Mostrar matriz días trabajados\n" + "7.- Acabar programa\n");
 			System.out.print("Elige una opci\u00F3n: ");
-			entrada=enteroNoNegativo();
+			entrada = enteroNoNegativo();
 			switch (entrada) {
 			case 1:
 				introducirEmpleado();
@@ -49,20 +44,18 @@ public class Principal {
 				listadoDetalladoEmpleados();
 				break;
 			case 4:
-				
+				listadoPuesto();
 				break;
-
 			case 5:
-				
+				avanceTemporal();
 				break;
 			case 6:
-				
-				break;
 
+				break;
 			case 7:
 				System.out.println("Eres seguro de que queieres acabar la programa (S/N)¿?");
-				if(aseguro()) {
-					ejecutar=false;
+				if (aseguro()) {
+					ejecutar = false;
 				}
 				break;
 			default:
@@ -70,37 +63,24 @@ public class Principal {
 				break;
 			}
 		}
-		
+
 	}
-	
+
 	// Metodo para introducir a un empleado
 	public static void introducirEmpleado() {
 		System.out.print("Nombre: ");
-		String nombre=sc.nextLine();
+		String nombre = sc.nextLine();
 		System.out.print("Apellidos: ");
-		String apellidos=sc.nextLine();
+		String apellidos = sc.nextLine();
 		System.out.print("DNI: ");
 		String dni;
 		do {
-			dni=sc.nextLine();
+			dni = sc.nextLine();
 		} while (!validarDNI(dni));
-		int tipo=0;
-		while(tipo<1 || tipo>5) {
-			System.out.print("Tipo de trabajador (0 para ayuda): ");
-			tipo=enteroNoNegativo();
-			if(tipo==0) {
-				JOptionPane.showMessageDialog(null, "Tipos disponibles\n" + 
-													"1.- Mozo de almacen\n" +
-													"2.- Jefe de Secci\u00F3n\n" +
-													"3.- Jefe de Planta\n" +
-													"4.- Personal de Administraci\u00F3n\n" +
-													"5.- Directivo"
-						);
-			}
-		}
+		int tipo = tipoEmpleado();
 		System.out.print("Antiguedad: ");
-		int antiguedad=enteroNoNegativo();
-		int cat=0;
+		int antiguedad = enteroNoNegativo();
+		int cat = 0;
 		boolean consejo;
 		switch (tipo) {
 		case 1:
@@ -108,17 +88,17 @@ public class Principal {
 			empleados.add(new MozoDeAlmacen(nombre, apellidos, dni, antiguedad));
 			break;
 		case 2:
-			while (cat<1 || cat>3) {
+			while (cat < 1 || cat > 3) {
 				System.out.print("Categoria(1-3): ");
-				cat=enteroNoNegativo();
+				cat = enteroNoNegativo();
 			}
 			System.out.println("Nuevo Jefe de Secci\u00F3n registrado");
 			empleados.add(new JefeDeSeccion(nombre, apellidos, dni, antiguedad, cat));
 			break;
 		case 3:
-			while (cat<1 || cat>4) {
+			while (cat < 1 || cat > 4) {
 				System.out.print("Categoria(1-4): ");
-				cat=enteroNoNegativo();
+				cat = enteroNoNegativo();
 			}
 			System.out.println("Nuevo Jefe de Planta registrado");
 			empleados.add(new JefeDePlanta(nombre, apellidos, dni, antiguedad, cat));
@@ -129,126 +109,196 @@ public class Principal {
 			break;
 		case 5:
 			System.out.println("Indica si es el miembro del consejo (S/N)");
-			consejo=aseguro();
+			consejo = aseguro();
 			System.out.println("Nuevo Directivo registrado");
 			empleados.add(new Directivo(nombre, apellidos, dni, antiguedad, consejo));
 			break;
 		default:
 			break;
 		}
-		
+
 	}
-	
+
 	public static void eliminarEmpleado() {
-		while(true) {
-			listarEmpleados();
-			System.out.println("Elige un empleado para borrar (0 - para salir):");
-			int entrada=enteroNoNegativo()-1;
-			if(entrada==-1) {
-				System.out.println("Eliminado acabado");
-				return;
-			}
-			if (entrada<empleados.size()) {
-				System.out.println("Eres seguro que quieres borrar el siguiente empleado");
-				System.out.println(empleados.get(entrada));
-				if(aseguro()) empleados.remove(entrada);
-				else System.out.println("Borrado cancelado");
+		while (true) {
+			if(empleados.size()>0) {
+				listarEmpleados();
+				System.out.println("Elige un empleado para borrar (0 - para salir):");
+				int entrada = enteroNoNegativo() - 1;
+				if (entrada == -1) {
+					System.out.println("Eliminado acabado");
+					return;
+				}
+				if (entrada < empleados.size()) {
+					System.out.println("Eres seguro que quieres borrar el siguiente empleado");
+					System.out.println(empleados.get(entrada));
+					if (aseguro())
+						empleados.remove(entrada);
+					else
+						System.out.println("Borrado cancelado");
+				} else {
+					System.out.println("Error: empleado no existe");
+				}
 			}
 			else {
+				System.out.println("No hay empleados agregados en la sistema");
+				return;
+			}
+		}
+	}
+
+	public static void listadoDetalladoEmpleados() {
+		listarEmpleados();
+		if(empleados.size()>0) {
+			System.out.println("Seleciona un empleado para ver la información detallada:");
+			int entrada = enteroNoNegativo() - 1;
+			if (entrada >= 0 && entrada < empleados.size()) {
+				empleados.get(entrada).mostrarNetoEIdemnizacion();
+			} else {
 				System.out.println("Error: empleado no existe");
 			}
 		}
+		else {
+			System.out.println("No hay empleados disponibles");
+		}
+	}
+
+	public static void listadoPuesto() {
+		int tipo=tipoEmpleado();
+		Class clase;
+		switch (tipo) {
+		case 1:
+			clase=MozoDeAlmacen.class;
+			break;
+		case 2:
+			clase=JefeDeSeccion.class;
+			break;
+		case 3:
+			clase=JefeDePlanta.class;
+			break;
+		case 4:
+			clase=PersonalDeAdministracion.class;
+			break;
+		case 5:
+			clase=Directivo.class;
+			break;
+		default:
+			System.out.println("Error impredecible");
+			return;
+		}
+		boolean esta=false;
+		for (int i=0; i<empleados.size();i++) {
+			if(clase.isInstance(empleados.get(i))) {
+				System.out.println(empleados.get(i).datos());
+				esta=true;
+			}
+		}
+		if(!esta) {
+			System.out.println("No hay empleados de ese tipo");
+		}
 	}
 	
-	public static void listadoDetalladoEmpleados() {
-		listarEmpleados();
-		System.out.println("Seleciona un empleado para ver la información detallada:");
-		int entrada=enteroNoNegativo()-1;
-		if(entrada>=0 && entrada<empleados.size()) {
-			empleados.get(entrada).mostrarNetoEIdemnizacion();
-		}
-		else {
-			System.out.println("Error: empleado no existe");
+	public static void avanceTemporal() {
+		System.out.print("Cuantos dias: ");
+		int dias=enteroNoNegativo();
+		for (Empleado empleado : empleados) {
+			empleado.setAntiguedad(empleado.getAntiguedad()+dias);
+			empleado.contarAnyos();
 		}
 	}
 	
 	public static void listarEmpleados() {
 		for (int i = 0; i < empleados.size(); i++) {
-			System.out.println((i+1) + ".- " + empleados.get(i));
+			System.out.println((i + 1) + ".- " + empleados.get(i));
 		}
 	}
-	
+
 	// Metodo para que me introducen un int no negativo
-		public static int enteroNoNegativo() {
+	public static int enteroNoNegativo() {
 
-			int num = 0;
-			boolean listo = false;
-			// Hasta el momento que no introducen un int valido
-			while (!listo) {
-				// Hago try catch para estar seguro de que me introducen un int
-				try {
+		int num = 0;
+		boolean listo = false;
+		// Hasta el momento que no introducen un int valido
+		while (!listo) {
+			// Hago try catch para estar seguro de que me introducen un int
+			try {
 
-					num = Integer.parseInt(sc.nextLine());
-					// Si numero es positivo es valido
-					if (num >= 0) {
-						listo = true;
-					}
-					// El caso de un numero negativo
-					else {
-						System.out.println("No aceptamos numeros negativos");
-					}
-
+				num = Integer.parseInt(sc.nextLine());
+				// Si numero es positivo es valido
+				if (num >= 0) {
+					listo = true;
 				}
-				// Error de formato de numero
-				catch (NumberFormatException e) {
-					System.out.println("Formato de entrada invalido");
+				// El caso de un numero negativo
+				else {
+					System.out.println("No aceptamos numeros negativos");
 				}
 
 			}
-
-			return num;
+			// Error de formato de numero
+			catch (NumberFormatException e) {
+				System.out.println("Formato de entrada invalido");
+			}
 
 		}
-		
-		// Metodo para asegurar una desicion con s/n
-		public static boolean aseguro() {
-			char entrada = ' ';
-			while (true) {
-				try {
-					entrada = sc.nextLine().toLowerCase().charAt(0);
-					if (entrada == 's' || entrada == 'n')
-						break;
-					else
-						System.out.println("Solo se aceptan letras s/n:");
-				} catch (java.lang.StringIndexOutOfBoundsException e) {
-					System.out.println("No se aceptan lineas vacias:");
-				}
-			}
-			if (entrada == 's') {
-				return true;
-			} else {
-				return false;
+
+		return num;
+
+	}
+
+	// Metodo para asegurar una desicion con s/n
+	public static boolean aseguro() {
+		char entrada = ' ';
+		while (true) {
+			try {
+				entrada = sc.nextLine().toLowerCase().charAt(0);
+				if (entrada == 's' || entrada == 'n')
+					break;
+				else
+					System.out.println("Solo se aceptan letras s/n:");
+			} catch (java.lang.StringIndexOutOfBoundsException e) {
+				System.out.println("No se aceptan lineas vacias:");
 			}
 		}
-		
-		// Metodo para validar introducion del DNI
-		public static boolean validarDNI(String dni) {
-			// Patron de DNI
-			if (Pattern.matches("\\d{8}[A-Z]", dni)) {
-				// Busqueda del DNI repetido
-				for (int i = 0; i < empleados.size(); i++) {
-
-					if (empleados.get(i).getDni().equals(dni)) {
-						System.out.println("ERROR: DNI coincide con DNI de otro cliente");
-						return false;
-					}
-
-				}
-				System.out.println("DNI valido");
-				return true;
-			}
-
-			System.out.println("ERROR: DNI no valido");
+		if (entrada == 's') {
+			return true;
+		} else {
 			return false;
 		}
+	}
+
+	// Metodo para validar introducion del DNI
+	public static boolean validarDNI(String dni) {
+		// Patron de DNI
+		if (Pattern.matches("\\d{8}[A-Z]", dni)) {
+			// Busqueda del DNI repetido
+			for (int i = 0; i < empleados.size(); i++) {
+
+				if (empleados.get(i).getDni().equals(dni)) {
+					System.out.println("ERROR: DNI coincide con DNI de otro cliente");
+					return false;
+				}
+
+			}
+			System.out.println("DNI valido");
+			return true;
+		}
+
+		System.out.println("ERROR: DNI no valido");
+		return false;
+	}
+
+	// Metodo para selecionar tipo de empleado
+	public static int tipoEmpleado() {
+		int tipo = 0;
+		while (tipo < 1 || tipo > 5) {
+			System.out.print("Tipo de trabajador (0 para ayuda): ");
+			tipo = enteroNoNegativo();
+			if (tipo == 0) {
+				JOptionPane.showMessageDialog(null,
+						"Tipos disponibles\n" + "1.- Mozo de almacen\n" + "2.- Jefe de Secci\u00F3n\n"
+								+ "3.- Jefe de Planta\n" + "4.- Personal de Administraci\u00F3n\n" + "5.- Directivo");
+			}
+		}
+		return tipo;
+	}
 }

@@ -43,6 +43,10 @@ public abstract class Empleado implements Cobros{
 	public String toString() {
 		return this.nombre + " " + this.apellidos + " " + this.dni + " lleva " +this.antiguedad + " dias en la empresa en el puesto de ";
 	}
+	
+	 public String datos() {
+		 return this.nombre + " " + this.apellidos +" " + this.dni + " lleva " + this.antiguedad + " dias en empresa con el salario Neto " + this.sueldoNeto() +"\u20AC";
+	 }
 
 	public String getNombre() {
 		return nombre;

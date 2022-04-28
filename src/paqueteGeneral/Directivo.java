@@ -22,7 +22,7 @@ public class Directivo extends Empleado {
 
 	@Override
 	public double sueldoNeto() {
-		return this.sueldoBruto()*super.getNeto()+200.0*((this.consejo) ? 1:0);
+		return Math.round(this.sueldoBruto()*super.getNeto()*100.0)/100.0+200.0*((this.consejo) ? 1:0);
 	}
 	
 	@Override
