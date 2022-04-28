@@ -46,7 +46,7 @@ public class Principal {
 				eliminarEmpleado();
 				break;
 			case 3:
-				
+				listadoDetalladoEmpleados();
 				break;
 			case 4:
 				
@@ -157,6 +157,18 @@ public class Principal {
 			else {
 				System.out.println("Error: empleado no existe");
 			}
+		}
+	}
+	
+	public static void listadoDetalladoEmpleados() {
+		listarEmpleados();
+		System.out.println("Seleciona un empleado para ver la información detallada:");
+		int entrada=enteroNoNegativo()-1;
+		if(entrada>=0 && entrada<empleados.size()) {
+			empleados.get(entrada).mostrarNetoEIdemnizacion();
+		}
+		else {
+			System.out.println("Error: empleado no existe");
 		}
 	}
 	

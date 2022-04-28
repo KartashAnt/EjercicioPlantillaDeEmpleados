@@ -32,9 +32,16 @@ public abstract class Empleado implements Cobros{
 		}
 	}
 	
+	public void mostrarNetoEIdemnizacion() {
+		System.out.println(this.nombre + " " + this.apellidos);
+		System.out.println("Sueldo Bruto: " + this.sueldoBruto() + "\u20AC");
+		System.out.println("Sueldo Neto: " + this.sueldoNeto() + "\u20AC");
+		System.out.println("Indemnizaci\u00F3n: " + this.indemnizacion() + "\u20AC");
+	}
+	
 	@Override
 	public String toString() {
-		return this.nombre + " " + this.apellidos + " " + this.dni + " lleva " +this.antiguedad + "dias en la empresa en el puesto de ";
+		return this.nombre + " " + this.apellidos + " " + this.dni + " lleva " +this.antiguedad + " dias en la empresa en el puesto de ";
 	}
 
 	public String getNombre() {
