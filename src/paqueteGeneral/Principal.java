@@ -1,10 +1,15 @@
 package paqueteGeneral;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.plaf.DimensionUIResource;
 
 public class Principal {
 	static ArrayList<Empleado> empleados = new ArrayList<>();
@@ -50,7 +55,7 @@ public class Principal {
 				avanceTemporal();
 				break;
 			case 6:
-
+				matrizEmpleados();
 				break;
 			case 7:
 				System.out.println("Eres seguro de que queieres acabar la programa (S/N)¿?");
@@ -206,7 +211,48 @@ public class Principal {
 			empleado.contarAnyos();
 		}
 	}
-	
+		
+	public static void matrizEmpleados() {
+		Class[] clases= {MozoDeAlmacen.class,JefeDeSeccion.class,JefeDePlanta.class,PersonalDeAdministracion.class,Directivo.class};
+		ArrayList<Empleado> almacen=new ArrayList<>();
+		Comparator<Empleado> comparadorPorAntiguedad=new Comparator<Empleado>() {
+			@Override
+			public int compare(Empleado arg0, Empleado arg1) {
+				return arg0.getAntiguedad()-arg1.getAntiguedad();
+			}
+		};
+		String[] nombresColumnas= {"Puesto","Menos antiguo","Más antiguo","Media"};
+		Integer[][] datosColumnas=new Integer[5][4];
+		int sumaDias;
+		int contTrabajadores;
+		for (int i = 0; i < clases.length; i++) {
+			datosColumnas[i][0]=i+1;
+			almacen.clear();
+			sumaDias=0;
+			contTrabajadores=0;
+			for (Empleado empleado : empleados) {
+				if(clases[i].isInstance(empleado)) {
+					sumaDias+=empleado.getAntiguedad();
+					contTrabajadores++;
+					almacen.add(empleado);
+				}
+			}
+			if(almacen.size()==0) {
+				for (int j = 1; j < datosColumnas[i].length; j++) {
+					datosColumnas[i][j]=0;
+				}
+			}
+			else {
+				Collections.sort(almacen, comparadorPorAntiguedad);
+				datosColumnas[i][1]=almacen.get(0).getAntiguedad();
+				datosColumnas[i][2]=almacen.get(almacen.size()-1).getAntiguedad();
+				datosColumnas[i][3]=sumaDias/contTrabajadores;
+			}
+		}
+		JTable tabla=new JTable(datosColumnas, nombresColumnas);
+		JOptionPane.showMessageDialog(null, new JScrollPane(tabla));
+	}
+
 	public static void listarEmpleados() {
 		for (int i = 0; i < empleados.size(); i++) {
 			System.out.println((i + 1) + ".- " + empleados.get(i));
