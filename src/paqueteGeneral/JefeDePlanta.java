@@ -1,35 +1,46 @@
 package paqueteGeneral;
 
+//Clase para identificar un jefe de planta
 public class JefeDePlanta extends Empleado {
+	//Caracteristica de un jefe de planta
 	private int cat;
 
+	// Constructor que pasa caracteristicas basicas al superclase. Además paso los valores de variables nesesarios para calculos
+		// Además paso la caracteristica basica de ese clase
 	public JefeDePlanta(String nombre, String apellidos, String dni, int antiguedad, int cat) {
-		super(nombre, apellidos, dni, antiguedad , 1825.5, 0.81, 0.9);
+		super(nombre, apellidos, dni, antiguedad, 1825.5, 0.81, 0.9);
 		this.cat = cat;
 	}
 
+	//Implemento metodo de clase padre
 	@Override
 	public double sueldoBruto() {
-		return super.getSueldoBase()+(60.0*this.cat);
+		return super.getSueldoBase() + (60.0 * this.cat);
 	}
 
+	//Implemento metodo de Interfaz Cobros pasado a traves de clase abstracta padre
 	@Override
 	public double indemnizacion() {
-		double indeminisación = super.getSueldoBase() * (2.0 / 3.0) * super.getContAnyos() + (400.0*this.cat);
+		//Comparo Indeminización teorica de ese empleado con una máxima para este empleado
+		double indeminisación = super.getSueldoBase() * (2.0 / 3.0) * super.getContAnyos() + (400.0 * this.cat);
 		double max = super.getSueldoBase() * 12;
 		return Math.round(Math.min(indeminisación, max) * 100.0) / 100.0;
 	}
 	
+	//Implemento metodo de Interfaz Cobros heredido de clase abstracta padre
 	@Override
 	public double sueldoNeto() {
-		return Math.round(this.sueldoBruto()*super.getNeto()*100.0)/100.0;
+		//Lo calculo y redondeo
+		return Math.round(this.sueldoBruto() * super.getNeto() * 100.0) / 100.0;
 	}
 
+	//El toString que usa toString de clase padre
 	@Override
 	public String toString() {
 		return super.toString() + "Jefe de plante de la " + this.cat + " categor\u00EDa";
 	}
 
+	//Getters y Setters basicos
 	public int getCat() {
 		return cat;
 	}
