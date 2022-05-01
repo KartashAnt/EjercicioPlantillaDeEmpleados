@@ -18,9 +18,9 @@ public class MozoDeAlmacen extends Empleado {
 	@Override
 	public double indemnizacion() {
 		//Comparo Indeminización teorica de ese empleado con una máxima para este empleado
-		double indeminisación = super.getSueldoBase() * (2.0 / 3.0) * super.getContAnyos();
+		double indeminisacion = super.getSueldoBase() * (2.0 / 3.0) * super.getContAnyos();
 		double max = super.getSueldoBase() * 12;
-		return Math.round(Math.min(indeminisación, max) * 100.0) / 100.0;
+		return Math.round(Math.min(indeminisacion, max) * 100.0) / 100.0;
 	}
 
 	//Implemento metodo de Interfaz Cobros herdido de clase abstracta padre

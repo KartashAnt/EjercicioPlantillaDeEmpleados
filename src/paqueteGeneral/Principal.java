@@ -81,7 +81,7 @@ public class Principal {
 			//Acabar programa
 			case 7:
 				//Aseguramos de que el cliente quiere apagar la programa
-				System.out.println("Esta seguro de que quiere acabar la programa (S/N)¿?");
+				System.out.println("Esta seguro de que quiere acabar la programa (S/N)?");
 				if (aseguro()) {
 					ejecutar = false;
 				}
@@ -296,7 +296,7 @@ public class Principal {
 			}
 		};
 		//Nombres de las columnas de la futura tabla
-		String[] nombresColumnas = { "Puesto", "Menos antiguo", "Más antiguo", "Media" };
+		String[] nombresColumnas = { "Puesto", "Menos antiguo", "Mas antiguo", "Media" };
 		//Matriz
 		Integer[][] datosColumnas = new Integer[5][4];
 		//Sumatorio de dias acumulados por todos los trabajadores de mismo puesto
